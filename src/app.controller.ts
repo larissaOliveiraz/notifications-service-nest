@@ -1,6 +1,6 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { randomUUID } from 'crypto';
+import { CreateNotificationValidator } from './create-notification-validator';
 
 @Controller('notifications')
 export class AppController {
@@ -9,5 +9,18 @@ export class AppController {
   @Get()
   async findAll() {
     return this.prismaService.notification.findMany();
+  }
+
+  @Post()
+  async create(@Body() body: CreateNotificationValidator) {
+    const { recipientId, content, category } = body;
+
+    return this.prismaService.notification.create({
+      data: {
+        recipientId,
+        content,
+        category,
+      },
+    });
   }
 }
