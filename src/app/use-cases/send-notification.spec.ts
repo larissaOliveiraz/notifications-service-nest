@@ -1,16 +1,24 @@
 import { randomUUID } from 'crypto';
-import { SendNotification } from './send-notification';
+import { SendNotificationUseCase } from './send-notification';
+import { InMemoryNotificationsRepository } from '../../../test/repositories/in-memory-notifications';
 
 describe('Send Notification', () => {
-  it('should be able to send a notification', async () => {
-    const sendNotification = new SendNotification();
+  let notificationsRepository: InMemoryNotificationsRepository;
+  let usecase: SendNotificationUseCase;
 
-    const { notification } = await sendNotification.execute({
+  beforeEach(() => {
+    notificationsRepository = new InMemoryNotificationsRepository();
+    usecase = new SendNotificationUseCase(notificationsRepository);
+  });
+
+  it('should be able to send a notification', async () => {
+    const { notification } = await usecase.execute({
       recipientId: randomUUID(),
       content: 'Nova solicitação de amizade',
       category: 'social',
     });
 
-    expect(notification).toBeTruthy();
+    expect(notificationsRepository.notifications).toHaveLength(1);
+    expect(notificationsRepository.notifications[0]).toEqual(notification);
   });
 });
