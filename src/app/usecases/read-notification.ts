@@ -1,10 +1,12 @@
 import { NotificationsRepository } from '@app/repositories/notifications-repository';
 import { NotificationNotFoundException } from './exceptions/notification-not-found';
+import { Injectable } from '@nestjs/common';
 
 interface IRequest {
   notificationId: string;
 }
 
+@Injectable()
 export class ReadNotificationUseCase {
   constructor(private notificationsRepository: NotificationsRepository) {}
 

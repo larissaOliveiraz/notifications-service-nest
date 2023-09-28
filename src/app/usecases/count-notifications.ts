@@ -1,9 +1,11 @@
 import { NotificationsRepository } from '@app/repositories/notifications-repository';
+import { Injectable } from '@nestjs/common';
 
 interface IRequest {
   recipientId: string;
 }
 
+@Injectable()
 export class CountNotificationsUseCase {
   constructor(private notificationsRepository: NotificationsRepository) {}
 
