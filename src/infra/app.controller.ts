@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { CreateNotificationValidator } from './create-notification-validator';
 
 @Controller('notifications')
 export class AppController {
@@ -12,7 +11,7 @@ export class AppController {
   }
 
   @Post()
-  async create(@Body() body: CreateNotificationValidator) {
+  async create(@Body() body: any) {
     const { recipientId, content, category } = body;
 
     return this.prismaService.notification.create({
