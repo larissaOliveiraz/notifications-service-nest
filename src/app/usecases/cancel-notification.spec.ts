@@ -1,9 +1,7 @@
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications';
 import { CancelNotificationUseCase } from './cancel-notification';
-import { Notification } from '@app/entities/notification';
-import { randomUUID } from 'crypto';
-import { Content } from '@app/entities/content';
 import { NotificationNotFoundException } from './exceptions/notification-not-found';
+import { makeNotification } from '@test/factories/notification-factory';
 
 describe('Cancel Notification', () => {
   let notificationsRepository: InMemoryNotificationsRepository;
@@ -15,11 +13,7 @@ describe('Cancel Notification', () => {
   });
 
   it('should be able to cancel a notification', async () => {
-    const notification = new Notification({
-      recipientId: randomUUID(),
-      content: new Content('Test notification'),
-      category: 'test',
-    });
+    const notification = makeNotification();
 
     await notificationsRepository.create(notification);
 
