@@ -5,6 +5,7 @@ import { Notification as PrismaNotification } from '@prisma/client';
 export class PrismaNotificationMapper {
   static toPrisma(notification: Notification) {
     return {
+      id: notification._id,
       recipientId: notification.recipientId,
       content: notification.content.value,
       category: notification.category,
